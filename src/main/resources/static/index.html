@@ -5,6 +5,25 @@
     <title>test</title>
 </head>
 <body>
-<strong>欢迎使用</strong>
+<strong onclick="openWss()">欢迎使用</strong>
+
+<strong onclick="send()">发送消息</strong>
+
+<script type="text/javascript" rel="script">
+
+    var wss;
+
+    function openWss() {
+        wss = new WebSocket("wss://localhost:8090/wss/socket.server")
+        wss.onmessage = function (ev) {
+            console.info(ev.data)
+        }
+
+    }
+    function send() {
+
+        wss.send("hello")
+    }
+</script>
 </body>
 </html>
