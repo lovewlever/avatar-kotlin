@@ -10,14 +10,17 @@ class LoginVerificationInterceptor:HandlerInterceptorAdapter() {
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
         super.postHandle(request, response, handler, modelAndView)
+        println("LoginVerificationInterceptor---->")
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+        println("LoginVerificationInterceptor---->")
         return super.preHandle(request, response, handler)
     }
 
     override fun afterCompletion(request: HttpServletRequest, response: HttpServletResponse, handler: Any, ex: Exception?) {
         super.afterCompletion(request, response, handler, ex)
+        println("LoginVerificationInterceptor---->")
     }
 
 }
