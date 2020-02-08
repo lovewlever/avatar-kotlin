@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.avatar.model.dao.mapper.EmoticonPackageMapper">
+
+    <resultMap id="emoticon" type="com.project.avatar.model.dao.data.EmoticonPackageData">
+        <id column="id" property="id"/>
+        <result column="file_path" property="filePath"/>
+        <result column="add_time" property="addTime"/>
+        <result column="file_name" property="fileName"/>
+        <result column="label" property="label"/>
+        <result column="file_size" property="fileSize"/>
+        <result column="describe_x" property="describeX"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    
+    <select id="findEmoticonPackageByPage" resultMap="emoticon">
+        select * from t_emoticon_package limit #{currPage},#{pageSize}
+    </select>
+
+    <select id="findTotalCount" resultType="INTEGER" >
+        select count(0) from t_emoticon_package
+    </select>
+
+
+    <insert id="saveEmoticon" parameterType="com.project.avatar.model.dao.data.EmoticonPackageData">
+        insert into t_emoticon_package (file_path, add_time, file_name, file_size, label, describe_x, user_id)
+        values (#{filePath},#{addTime},#{fileName},#{fileSize},#{label},#{describeX},#{userId})
+    </insert>
+</mapper>

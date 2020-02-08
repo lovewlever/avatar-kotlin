@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.avatar.model.dao.mapper.UserMapper">
+
+    <resultMap id="getUser" type="com.project.avatar.model.dao.data.UserInfo">
+        <id column="id" property="id"/>
+        <result column="u_name" property="uName"/>
+        <result column="u_pwd" property="uPwd"/>
+        <result column="u_email" property="uEmail"/>
+        <result column="token" property="token"/>
+
+        <association property="authWxData" javaType="com.project.avatar.model.dao.data.AuthWxData" column="user_id">
+            <id column="id" property="id"/>
+            <result column="wx_id" property="wxId"/>
+            <result column="wx_name" property="wxName"/>
+            <result column="user_id" property="userId"/>
+        </association>
+
+        <collection property="authQQList" ofType="com.project.avatar.model.dao.data.AuthQQData" column="user_id">
+            <id column="auth_qq_id" property="authQQId"/>
+            <result column="qq_id" property="qqId"/>
+            <result column="qq_name" property="qqName"/>
+            <result column="user_id" property="userId"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUserInfoById" resultMap="getUser">
+        select u.*
+        from user_info u
+        where u.id = #{id}
+    </select>
+
+    <select id="findUserInfoByOther" resultMap="getUser">
+        select * from user_info where 1 = 1
+        <choose>
+            <when test="email != null">
+                and u_email = #{email}
+            </when>
+            <when test="phone != null">
+                and u_email = #{phone}
+            </when>
+            <when test="userName != null">
+                and u_name = #{userName}
+            </when>
+            <otherwise>
+                and id = 0
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <insert id="registeredUser" parameterType="com.project.avatar.model.dao.data.UserInfo">
+        insert into user_info ( u_name, u_pwd, u_email,u_phone,)
+        VALUES (#{uName},#{uPwd},#{uEmail},#{uPhone})
+    </insert>
+
+</mapper>
