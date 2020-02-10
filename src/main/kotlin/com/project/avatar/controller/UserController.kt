@@ -2,13 +2,14 @@ package com.project.avatar.controller
 
 import com.project.avatar.common.RequestMappingCommon
 import com.project.avatar.common.Result
-import com.project.avatar.common.ResultCommon
 import com.project.avatar.model.dao.data.UserInfo
 import com.project.avatar.model.services.UserService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import javax.annotation.Resource
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 class UserController {
@@ -21,8 +22,14 @@ class UserController {
      * 登录
      */
     @RequestMapping(RequestMappingCommon.LOGIN)
-    fun login(email:String,phone:String,userName:String,pwd:String):Result<UserInfo> {
-        return userService.login(email,phone,userName,pwd)
+    fun login(@RequestParam(defaultValue = "")email:String,
+              @RequestParam(defaultValue = "")phone:String,
+              @RequestParam(defaultValue = "")userName:String,
+              request:HttpServletRequest,
+              pwd:String):Result<UserInfo> {
+        val userAgent = request.getHeader("User-Agent")
+
+        return userService.login(email, phone, userName, pwd,userAgent)
     }
 
 

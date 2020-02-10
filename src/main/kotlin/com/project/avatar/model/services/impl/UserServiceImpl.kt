@@ -1,5 +1,6 @@
 package com.project.avatar.model.services.impl
 
+import com.project.avatar.common.JwtHelper
 import com.project.avatar.common.Result
 import com.project.avatar.common.ResultCommon
 import com.project.avatar.model.dao.data.UserInfo
@@ -46,14 +47,28 @@ class UserServiceImpl:UserService {
     /**
      * 登录
      */
-    override fun login(email:String,phone:String,userName:String,pwd:String): Result<UserInfo> {
-        userMapper.findUserInfoByOther(email,phone,userName).let {
-            return if (pwd === it.uPwd) {
+    override fun login(email:String,phone:String,userName:String,pwd:String,identities:String): Result<UserInfo> {
+        userMapper.findUserInfoByOther(email,phone,userName)?.let { it ->
+            return if (pwd == it.uPwd) {
                 it.uPwd = ""
+                var userName = ""
+                it.uEmail?.let {
+                    userName = it
+                } ?: it.uName?.let {
+                    userName = it
+                } ?: it.uPhone?.let {
+                    userName = it
+                }
+
+                val generateJWT = JwtHelper.generateJWT(it.id.toString(), userName, identities)
+                it.token = generateJWT
+
                 ResultCommon.generateData(data = it)
             } else {
-                ResultCommon.generateError(msg = "找不到此用户或密码错误！")
+                ResultCommon.generateError(msg = "密码错误！")
             }
+        } ?: let {
+            return ResultCommon.generateError(msg = "找不到此用户或密码错误！")
         }
 
     }

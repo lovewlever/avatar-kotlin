@@ -26,8 +26,9 @@ class HttpConfig:WebMvcConfigurer,WebSocketConfigurer
     }
 
     override fun addInterceptors(registry: InterceptorRegistry) {
-        super.addInterceptors(registry)
         registry.addInterceptor(LoginVerificationInterceptor())
+                .addPathPatterns("/find_emoticon_package")
+        super.addInterceptors(registry)
     }
 
     override fun configureDefaultServletHandling(configurer: DefaultServletHandlerConfigurer) {

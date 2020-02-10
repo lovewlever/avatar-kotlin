@@ -5,7 +5,7 @@ import com.project.avatar.model.dao.data.UserInfo
 
 interface UserService {
 
-    fun login(email:String,phone:String,userName:String,pwd:String): Result<UserInfo>
+    fun login(email:String,phone:String,userName:String,pwd:String,identities:String): Result<UserInfo>
 
     fun getUserInfoById(id:Int):Result<UserInfo>
 

@@ -1,8 +1,11 @@
 package com.project.avatar.common
 
+import com.google.gson.Gson
+
 class ResultCommon {
 
     companion object {
+        val gson = Gson()
 
         fun <T> generateData(code: Int = 1, curPage: Int = 1, tolPage: Int = 1, msg: String? = "success", data: MutableList<T> = ArrayList()): Result<T> {
             return Result(code = code, curPage = curPage, tolPage = tolPage, data = data, msg = msg)
@@ -20,6 +23,11 @@ class ResultCommon {
 
         fun <T> generateSuccess(code: Int = 1, msg: String? = "success"): Result<T> {
             return Result(code = code, msg = msg)
+        }
+
+        fun <T> toJson(result: Result<T>):String
+        {
+            return gson.toJson(result)
         }
 
     }

@@ -33,13 +33,13 @@
     <select id="findUserInfoByOther" resultMap="getUser">
         select * from user_info where 1 = 1
         <choose>
-            <when test="email != null">
+            <when test="email != ''">
                 and u_email = #{email}
             </when>
-            <when test="phone != null">
+            <when test="phone != ''">
                 and u_email = #{phone}
             </when>
-            <when test="userName != null">
+            <when test="userName != ''">
                 and u_name = #{userName}
             </when>
             <otherwise>

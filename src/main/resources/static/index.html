@@ -9,8 +9,17 @@
 
 <strong onclick="send()">发送消息</strong>
 
-<script type="text/javascript" rel="script">
 
+<strong onclick="login()">登录</strong>
+
+
+<strong onclick="findEmo()">查询表情包</strong>
+
+
+
+
+<script type="text/javascript" src="jquery-3.4.js" rel="script"></script>
+<script type="text/javascript" rel="script">
 
     var wss;
 
@@ -23,8 +32,36 @@
     }
 
     function send() {
-
         wss.send("hello")
+    }
+    
+    
+    function login() {
+        $.ajax({
+            url:"http://localhost:8090/login?email=45635634@qq.com&pwd=woaini123",
+            type:"POST",
+                headers: {
+                    token: "jkldjkflj565jkljfkslje-34f"
+                },
+            data:{},
+            success:function (data) {
+                console.info(data)
+            }
+        })
+    }
+
+    function findEmo() {
+        $.ajax({
+            url:"http://localhost:8090//find_emoticon_package",
+            type:"POST",
+            headers: {
+                token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJCRkIxOTdFNDgyRjg0ODQ3MkY2N0MwODcyQUNFRUIzQyIsInVzZXJOYW1lIjoiNDU2MzU2MzRAcXEuY29tIiwidXNlckFnZW50IjoiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTVfMikgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzgwLjAuMzk4Ny44NyBTYWZhcmkvNTM3LjM2IiwiZXhwIjoxNTgxMzI5Mzg1LCJuYmYiOjE1ODEzMjc1ODV9.HMfxomJ-IaCv7YclqWmRGdjMlgJvifHNpfdD4m_DUkY"
+            },
+            data:{},
+            success:function (data) {
+                console.info(data)
+            }
+        })
     }
 </script>
 </body>
