@@ -23,8 +23,8 @@ class UserController {
      * 登录
      */
     @RequestMapping(RequestMappingCommon.LOGIN)
-    fun login(@RequestParam(defaultValue = "")account:String,
-              request:HttpServletRequest, pwd:String):Result<UserInfo> {
+    fun login(@RequestParam(defaultValue = "") account: String,
+              request: HttpServletRequest, pwd: String): Result<UserInfo> {
         val userAgent = request.getHeader("User-Agent")
         var email = ""
         var phone = ""
@@ -35,7 +35,7 @@ class UserController {
             else -> userName = account
         }
 
-        return userService.login(email, phone, userName, pwd,userAgent)
+        return userService.login(email, phone, userName, pwd, userAgent)
     }
 
 
@@ -43,7 +43,7 @@ class UserController {
      * 注册
      */
     @RequestMapping(RequestMappingCommon.REGISTERED)
-    fun registered(@Validated userInfo: UserInfo) : Result<String> {
+    fun registered(@Validated userInfo: UserInfo): Result<String> {
         return userService.registeredUser(userInfo)
     }
 
