@@ -1,5 +1,6 @@
 package com.project.avatar.controller
 
+import com.project.avatar.common.PatternCommon
 import com.project.avatar.common.RequestMappingCommon
 import com.project.avatar.common.Result
 import com.project.avatar.model.dao.data.UserInfo
@@ -22,12 +23,17 @@ class UserController {
      * 登录
      */
     @RequestMapping(RequestMappingCommon.LOGIN)
-    fun login(@RequestParam(defaultValue = "")email:String,
-              @RequestParam(defaultValue = "")phone:String,
-              @RequestParam(defaultValue = "")userName:String,
-              request:HttpServletRequest,
-              pwd:String):Result<UserInfo> {
+    fun login(@RequestParam(defaultValue = "")account:String,
+              request:HttpServletRequest, pwd:String):Result<UserInfo> {
         val userAgent = request.getHeader("User-Agent")
+        var email = ""
+        var phone = ""
+        var userName = ""
+        when {
+            PatternCommon.PATTERN_PHONE.matches(account) -> phone = account
+            PatternCommon.PATTERN_EMAIL.matches(account) -> email = account
+            else -> userName = account
+        }
 
         return userService.login(email, phone, userName, pwd,userAgent)
     }

@@ -17,7 +17,7 @@ class SaveFileCommon {
                 val infoData = SaveFileInfoData()
                 val name = it.originalFilename
                 val nameSuffix = name?.substring(name.lastIndexOf("."),name.length)
-                if (RequestMappingCommon.PATTERN_IMG.matches(nameSuffix.toString()))
+                if (PatternCommon.PATTERN_IMG.matches(nameSuffix.toString()))
                 {
                     try {
                         val saveFile = File(filePath,"${System.currentTimeMillis()}_${UUID.randomUUID()}.jpg")

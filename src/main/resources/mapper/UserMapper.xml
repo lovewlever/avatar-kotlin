@@ -37,7 +37,7 @@
                 and u_email = #{email}
             </when>
             <when test="phone != ''">
-                and u_email = #{phone}
+                and u_phone = #{phone}
             </when>
             <when test="userName != ''">
                 and u_name = #{userName}
