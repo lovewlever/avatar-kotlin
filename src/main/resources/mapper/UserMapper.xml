@@ -50,7 +50,7 @@
 
 
     <insert id="registeredUser" parameterType="com.project.avatar.model.dao.data.UserInfo">
-        insert into user_info ( u_name, u_pwd, u_email,u_phone,)
+        insert into user_info ( u_name, u_pwd, u_email,u_phone)
         VALUES (#{uName},#{uPwd},#{uEmail},#{uPhone})
     </insert>
 

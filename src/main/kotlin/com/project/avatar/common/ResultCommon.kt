@@ -5,7 +5,7 @@ import com.google.gson.Gson
 class ResultCommon {
 
     companion object {
-        val gson = Gson()
+        private val gson = Gson()
 
         fun <T> generateData(code: Int = 1, curPage: Int = 1, tolPage: Int = 1, msg: String? = "success", data: MutableList<T> = ArrayList()): Result<T> {
             return Result(code = code, curPage = curPage, tolPage = tolPage, data = data, msg = msg)

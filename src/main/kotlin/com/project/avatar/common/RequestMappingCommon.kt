@@ -9,6 +9,6 @@ object RequestMappingCommon {
     const val GET_USER_INFO = "/getUserInfo"//获取用户信息
 
     const val AUTH_QQ = "/authQQ"//qq认证
-    const val FIND_EMOTICON_PACKAGE = "/find_emoticon_package"//查询表情包
-    const val UPLOAD_EMOTICON_PACKAGE = "/upload_emoticon_package"//查询表情包
+    const val FIND_EMOTICON_PACKAGE = "/api/find_emoticon_package"//查询表情包
+    const val UPLOAD_EMOTICON_PACKAGE = "/upload_emoticon_package"//上传表情包
 }

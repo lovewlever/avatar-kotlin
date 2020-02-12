@@ -19,6 +19,15 @@ import org.springframework.web.servlet.ViewResolver
 class HttpConfig:WebMvcConfigurer,WebSocketConfigurer
 {
 
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowCredentials(true)
+                .maxAge(3600)
+                .allowedHeaders("*")
+        super.addCorsMappings(registry)
+    }
 
     override fun registerWebSocketHandlers(p0: WebSocketHandlerRegistry) {
         p0.addHandler(SpringWebSocketHandler(),"/wss/socket.server")

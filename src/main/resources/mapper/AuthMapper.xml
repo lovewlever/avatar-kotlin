@@ -3,11 +3,11 @@
 <mapper namespace="com.project.avatar.model.dao.mapper.AuthMapper">
 
     <select id="findQQAuthStatus" resultType="INTEGER">
-        select sum(1) from auth_qq where user_id = #{userId}
+        select count(0) from auth_qq where user_id = #{userId}
     </select>
 
     <select id="findWXAuthStatus" resultType="INTEGER">
-        select sum(1) from auth_wx where user_id = #{userId}
+        select count(0) from auth_wx where user_id = #{userId}
     </select>
 
     <insert id="authQQ" parameterType="com.project.avatar.model.dao.data.AuthQQData">
