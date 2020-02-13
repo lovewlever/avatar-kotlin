@@ -19,17 +19,18 @@ class SaveFileCommon {
             files.forEach {
                 val infoData = SaveFileInfoData()
                 val name = it.originalFilename
+                val namePrefix = name?.substring(0,name.lastIndexOf("."))
                 val nameSuffix = name?.substring(name.lastIndexOf("."),name.length)
                 if (PatternCommon.PATTERN_IMG.matches(nameSuffix.toString()))
                 {
                     try {
-                        val saveFile = File(filePath,"${System.currentTimeMillis()}_${UUID.randomUUID()}.jpg")
+                        val saveFile = File(filePath,"${System.currentTimeMillis()}_${UUID.randomUUID()}$nameSuffix")
                         it.transferTo(saveFile)
                         infoData.run {
                             code = 1
                             this.filePath = saveFile.path
                             addTime = System.currentTimeMillis().toString()
-                            fileName = it.name
+                            fileName = namePrefix
                             fileSize = it.size.toString()
                         }
                         callBack(infoData)
