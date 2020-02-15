@@ -50,4 +50,8 @@
         insert into t_emoticon_package (file_path, add_time, file_name, file_size, label, describe_x, user_id)
         values (#{filePath},#{addTime},#{fileName},#{fileSize},#{label},#{describeX},#{userId})
     </insert>
+
+    <insert id="clickLike" >
+        insert into t_like_emoticon_user_info (user_id,emo_id) values (#{userId},#{emoId})
+    </insert>
 </mapper>

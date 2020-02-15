@@ -20,4 +20,6 @@ interface EmoticonPackageService {
     fun saveEmoticon(emoticonPackageData: EmoticonPackageData):Result<String>
 
     fun isLike(userId:Int,emoId:Int):Boolean
+
+    fun clickLike(userId: Int,emoId: Int):Result<String>
 }

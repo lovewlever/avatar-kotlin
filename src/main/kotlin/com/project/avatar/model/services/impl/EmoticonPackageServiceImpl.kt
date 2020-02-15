@@ -22,9 +22,26 @@ class EmoticonPackageServiceImpl : EmoticonPackageService {
     @Resource
     lateinit var emoticonPackageMapper: EmoticonPackageMapper
 
+    /**
+     * 是否已经点赞
+     */
     override fun isLike(userId: Int, emoId: Int): Boolean {
-        val like = emoticonPackageMapper.isLike(userId, emoId)
-        return like
+        return emoticonPackageMapper.isLike(userId, emoId)
+    }
+
+    /**
+     * 点赞
+     */
+    override fun clickLike(userId: Int, emoId: Int): Result<String> {
+        return try {
+            calculateHeat(emoId)
+            emoticonPackageMapper.clickLike(userId,emoId)
+            ResultCommon.generateSuccess(msg = "点赞成功")
+        } catch (e:Exception)
+        {
+            ResultCommon.generateSuccess(msg = e.message)
+        }
+
     }
 
 
@@ -122,6 +139,23 @@ class EmoticonPackageServiceImpl : EmoticonPackageService {
         } catch (e: Exception) {
             ResultCommon.generateError(msg = "保存失败！")
         }
+    }
+
+
+    /**
+     * 计算热度指数
+     */
+    private fun calculateHeat(id:Int):Double
+    {
+        return 0.0
+    }
+
+    /**
+     * 计算推荐指数
+     */
+    private fun calculateRecommend(id:Int):Double
+    {
+        return 0.0
     }
 }
 

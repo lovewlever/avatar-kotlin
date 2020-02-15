@@ -1,7 +1,9 @@
 package com.project.avatar.controller
 
-import com.google.gson.JsonArray
-import com.project.avatar.common.*
+import com.project.avatar.common.RequestMappingCommon
+import com.project.avatar.common.Result
+import com.project.avatar.common.ResultCommon
+import com.project.avatar.common.SaveFileCommon
 import com.project.avatar.model.dao.data.EmoticonPackageData
 import com.project.avatar.model.services.EmoticonPackageService
 import org.apache.logging.log4j.LogManager
@@ -73,11 +75,10 @@ class EmoticonPackageController {
     {
         return if (emoticonPackageService.isLike(userId, emoId))
         {
-            ResultCommon.generateData(code = -2,msg = "已点赞")
+            ResultCommon.generateData(code = -2,msg = "已点过赞")
         } else
         {
-            val emoticon = emoticonPackageService.findEmoticonById(emoId)
-            ResultCommon.generateSuccess()
+            emoticonPackageService.clickLike(userId, emoId)
         }
 
     }
@@ -130,21 +131,6 @@ class EmoticonPackageController {
     }
 
 
-    /**
-     * 计算热度指数
-     */
-    private fun calculateHeat(id:Int):Double
-    {
-        return 0.0
-    }
-
-    /**
-     * 计算推荐指数
-     */
-    private fun calculateRecommend(id:Int):Double
-    {
-        return 0.0
-    }
 
 
 }
