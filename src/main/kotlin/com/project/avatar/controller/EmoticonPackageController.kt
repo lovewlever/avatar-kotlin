@@ -3,6 +3,7 @@ package com.project.avatar.controller
 import com.project.avatar.common.*
 import com.project.avatar.model.dao.data.EmoticonPackageData
 import com.project.avatar.model.services.EmoticonPackageService
+import org.apache.logging.log4j.LogManager
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -16,6 +17,8 @@ import javax.annotation.Resource
 @RestController
 class EmoticonPackageController {
 
+    private val log = LogManager.getLogger(EmoticonPackageController::class.simpleName)
+
     @Resource
     lateinit var emoticonPackageService: EmoticonPackageService
 
@@ -27,6 +30,7 @@ class EmoticonPackageController {
      */
     @RequestMapping(RequestMappingCommon.FIND_EMOTICON_PACKAGE)
     fun findEmoticonPackage(@RequestParam(name = "currentPage", defaultValue = "1") currentPage: Int, @RequestParam(name = "currentCount", defaultValue = "10") currentCount: Int): Result<EmoticonPackageData> {
+        log.debug("进入查询表情包Controller")
         val byPage = emoticonPackageService.findEmoticonByPage(currentPage, currentCount)
         return byPage
     }
@@ -37,6 +41,7 @@ class EmoticonPackageController {
     @RequestMapping(RequestMappingCommon.UPLOAD_EMOTICON_PACKAGE)
     fun uploadEmoticonPackage(@RequestParam("file")files: Array<MultipartFile>,describe:String,label:String):Result<String>
     {
+
         when {
             describe == "" -> return ResultCommon.generateError(msg = "描述不能为空")
             label == "" -> return ResultCommon.generateError(msg = "标签不能为空")
