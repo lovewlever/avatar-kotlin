@@ -1,5 +1,6 @@
 package com.project.avatar.config
 
+import com.project.avatar.common.RequestMappingCommon
 import com.project.avatar.interceptor.LoginVerificationInterceptor
 import com.project.avatar.websocket.SpringWebSocketHandler
 import org.springframework.context.annotation.Bean
@@ -36,7 +37,8 @@ class HttpConfig:WebMvcConfigurer,WebSocketConfigurer
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(LoginVerificationInterceptor())
-                .addPathPatterns("/find_emoticon_package")
+                .addPathPatterns("/ff")
+                //.addPathPatterns(RequestMappingCommon.FIND_EMOTICON_PACKAGE_LIKE)
         super.addInterceptors(registry)
     }
 

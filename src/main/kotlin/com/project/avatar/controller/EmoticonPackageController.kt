@@ -1,5 +1,6 @@
 package com.project.avatar.controller
 
+import com.google.gson.JsonArray
 import com.project.avatar.common.*
 import com.project.avatar.model.dao.data.EmoticonPackageData
 import com.project.avatar.model.services.EmoticonPackageService
@@ -22,6 +23,8 @@ class EmoticonPackageController {
     @Resource
     lateinit var emoticonPackageService: EmoticonPackageService
 
+
+
     /**
      * 查询表情包
      * @param currentPage
@@ -29,14 +32,62 @@ class EmoticonPackageController {
      * @return
      */
     @RequestMapping(RequestMappingCommon.FIND_EMOTICON_PACKAGE)
-    fun findEmoticonPackage(@RequestParam(name = "currentPage", defaultValue = "1") currentPage: Int, @RequestParam(name = "currentCount", defaultValue = "10") currentCount: Int): Result<EmoticonPackageData> {
+    fun findEmoticonPackage(@RequestParam(name = "currentPage", defaultValue = "1") currentPage: Int,
+                            @RequestParam(name = "currentCount", defaultValue = "10") currentCount: Int): Result<EmoticonPackageData> {
         log.debug("进入查询表情包Controller")
-        val byPage = emoticonPackageService.findEmoticonByPage(currentPage, currentCount)
-        return byPage
+        return emoticonPackageService.findEmoticonByPage(currentPage, currentCount)
+    }
+
+    /**
+     * 查询推荐的表情包
+     * @param currentCount
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping(RequestMappingCommon.FIND_EMOTICON_PACKAGE_RECOMMEND)
+    fun findEmoticonRecommend(@RequestParam(name = "currentPage", defaultValue = "1") currentPage: Int,
+                              @RequestParam(name = "currentCount", defaultValue = "10") currentCount: Int):Result<EmoticonPackageData>
+    {
+        log.debug("进入查询推荐表情包Controller")
+        return ResultCommon.generateSuccess()
+    }
+
+    /**
+     * 查询分类的表情包
+     * @param currentCount
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping(RequestMappingCommon.FIND_EMOTICON_PACKAGE_CLASS)
+    fun findEmoticonClass(@RequestParam(name = "currentPage", defaultValue = "1") currentPage: Int,
+                          @RequestParam(name = "currentCount", defaultValue = "10") currentCount: Int):String{
+        return emoticonPackageService.findEmoticonClass(1,10)
+
+    }
+
+    /**
+     * 点赞
+     */
+    @RequestMapping(RequestMappingCommon.FIND_EMOTICON_PACKAGE_LIKE)
+    fun emoticonLike(@RequestParam("emoId")emoId:Int,@RequestParam("userId")userId:Int):Result<String>
+    {
+        return if (emoticonPackageService.isLike(userId, emoId))
+        {
+            ResultCommon.generateData(code = -2,msg = "已点赞")
+        } else
+        {
+            val emoticon = emoticonPackageService.findEmoticonById(emoId)
+            ResultCommon.generateSuccess()
+        }
+
     }
 
     /**
      * 上传表情包
+     * @param files
+     * @param describe
+     * @param label
+     * @return
      */
     @RequestMapping(RequestMappingCommon.UPLOAD_EMOTICON_PACKAGE)
     fun uploadEmoticonPackage(@RequestParam("file")files: Array<MultipartFile>,describe:String,label:String):Result<String>
@@ -77,5 +128,23 @@ class EmoticonPackageController {
         }
 
     }
+
+
+    /**
+     * 计算热度指数
+     */
+    private fun calculateHeat(id:Int):Double
+    {
+        return 0.0
+    }
+
+    /**
+     * 计算推荐指数
+     */
+    private fun calculateRecommend(id:Int):Double
+    {
+        return 0.0
+    }
+
 
 }

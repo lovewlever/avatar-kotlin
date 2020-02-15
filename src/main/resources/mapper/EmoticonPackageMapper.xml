@@ -12,6 +12,21 @@
         <result column="describe_x" property="describeX"/>
         <result column="user_id" property="userId"/>
     </resultMap>
+
+    <select id="isLike" resultType="java.lang.Boolean">
+        select
+            case
+                when count(1) > 0
+                then 'true'
+                else 'false'
+            end
+        from t_like_emoticon_user_info
+        where user_id = #{userId} and emo_id = #{emoId}
+    </select>
+
+    <select id="findEmoticonById" resultMap="emoticon">
+        select * from t_emoticon_package where id = #{id}
+    </select>
     
     <select id="findEmoticonPackageByPage" resultMap="emoticon">
         select * from t_emoticon_package limit #{currPage},#{pageSize}
@@ -19,6 +34,15 @@
 
     <select id="findTotalCount" resultType="INTEGER" >
         select count(0) from t_emoticon_package
+    </select>
+
+
+    <select id="findEmoticonClass" resultMap="emoticon">
+        select t.*
+        from t_emoticon_package t
+        where (select count(1) from t_emoticon_package e where e.label = t.label and e.id > t.id) <![CDATA[<]]> 10
+        order by t.label
+        limit #{currPage},#{pageCount}
     </select>
 
 

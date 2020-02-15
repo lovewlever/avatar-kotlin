@@ -1,5 +1,6 @@
 package com.project.avatar.interceptor
 
+import com.google.gson.JsonParser
 import com.project.avatar.common.JwtHelper
 import com.project.avatar.common.ResultCommon
 import org.springframework.web.servlet.ModelAndView
@@ -19,6 +20,7 @@ class LoginVerificationInterceptor:HandlerInterceptorAdapter() {
         val header = request.getHeader("token")
         header?.let {
             JwtHelper.validateLogin(header)?.let {
+                request.setAttribute("uid",JsonParser.parseString(JwtHelper.validateLogin(header)).asJsonObject.get("userId").asInt)
                 return true
             } ?: let {
                 response.writer.write(ResultCommon.toJson(ResultCommon.generateError<String>(msg = "未登录！！")))

@@ -1,6 +1,9 @@
 package com.project.avatar.common
 
 import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 class ResultCommon {
 
@@ -28,6 +31,10 @@ class ResultCommon {
         fun <T> toJson(result: Result<T>):String
         {
             return gson.toJson(result)
+        }
+
+        fun <T> toJsonObject(result:Result<T>):JsonObject {
+            return JsonParser.parseString(gson.toJson(result)).asJsonObject
         }
 
     }
