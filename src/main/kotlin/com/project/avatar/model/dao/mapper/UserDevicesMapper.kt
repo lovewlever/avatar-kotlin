@@ -7,4 +7,6 @@ interface UserDevicesMapper {
     fun queryDeviceByUserId(userId:Int):UserDevicesData
 
     fun queryDevicesByUserId(userId: Int):MutableList<UserDevicesData>
+
+    fun saveDevices(userDevicesData: UserDevicesData)
 }

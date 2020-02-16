@@ -8,7 +8,7 @@ class UserDevicesData {
     var dManufacturer: String? = ""
     var bType: String? = ""
     var bName: String? = ""
-    var bVersion: Int? = 0
+    var bVersion: String? = ""
     var registerTime: String? = ""
     var lastLoginTime: String? = ""
     var loginIp: String? = ""

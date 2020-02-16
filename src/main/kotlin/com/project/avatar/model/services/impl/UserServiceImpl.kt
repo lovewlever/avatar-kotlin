@@ -29,6 +29,10 @@ class UserServiceImpl:UserService {
         return ResultCommon.generateData(data = arrList)
     }
 
+    override fun findUserInfoByOther(email: String, phone: String, userName: String): UserInfo? {
+        return userMapper.findUserInfoByOther(email,phone, userName)
+    }
+
     /**
      * 注册
      */

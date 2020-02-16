@@ -10,4 +10,6 @@ interface UserService {
     fun getUserInfoById(id:Int):Result<UserInfo>
 
     fun registeredUser(userInfo: UserInfo):Result<String>
+
+    fun findUserInfoByOther(email:String,phone:String,userName:String):UserInfo?
 }

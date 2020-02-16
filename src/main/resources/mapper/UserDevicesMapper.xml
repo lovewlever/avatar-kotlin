@@ -23,4 +23,9 @@
     <select id="queryDevicesByUserId" resultMap="userDevices">
         select * from user_devices where user_id = #{userId}
     </select>
+
+    <insert id="saveDevices" parameterType="com.project.avatar.model.dao.data.UserDevicesData">
+        insert into user_devices (d_type, d_is_mobile, d_name, d_manufacturer, b_type, b_name, b_version, register_time, last_login_time, login_ip, user_id)
+        VALUES (#{dType},#{dIsMobile},#{dName},#{dManufacturer},#{bType},#{bName},#{bVersion},#{registerTime},#{lastLoginTime},#{loginIp},#{userId})
+    </insert>
 </mapper>

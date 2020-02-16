@@ -1,19 +1,12 @@
 package com.project.avatar.config
 
-import com.project.avatar.common.RequestMappingCommon
 import com.project.avatar.interceptor.LoginVerificationInterceptor
 import com.project.avatar.websocket.SpringWebSocketHandler
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.Ordered
 import org.springframework.web.servlet.config.annotation.*
 import org.springframework.web.socket.config.annotation.EnableWebSocket
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
-import org.springframework.web.servlet.view.InternalResourceViewResolver
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
-import org.springframework.web.servlet.view.JstlView
-import org.springframework.web.servlet.ViewResolver
 
 @EnableWebSocket
 @Configuration

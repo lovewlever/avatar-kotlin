@@ -8,4 +8,6 @@ interface UserDevicesService {
     fun findDeviceByUserId(userId:Int): Result<UserDevicesData>
 
     fun findDevicesByUserId(userId: Int):Result<UserDevicesData>
+
+    fun saveDevices(userDevicesData:UserDevicesData):Result<String>
 }
