@@ -8,6 +8,8 @@
         <result column="u_pwd" property="uPwd"/>
         <result column="u_email" property="uEmail"/>
         <result column="token" property="token"/>
+        <result column="u_gender" property="uGender"/>
+        <result column="u_age" property="uAge"/>
 
         <association property="authWxData" javaType="com.project.avatar.model.dao.data.AuthWxData" column="user_id">
             <id column="id" property="id"/>

@@ -22,5 +22,5 @@ interface EmoticonPackageMapper {
 
     fun isLike(userId:Int,emoId:Int):Boolean
 
-    fun clickLike(userId: Int,emoId: Int)
+    fun saveLike(userId: Int,emoId: Int)
 }

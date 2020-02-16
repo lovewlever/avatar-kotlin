@@ -35,7 +35,7 @@ class EmoticonPackageServiceImpl : EmoticonPackageService {
     override fun clickLike(userId: Int, emoId: Int): Result<String> {
         return try {
             calculateHeat(emoId)
-            emoticonPackageMapper.clickLike(userId,emoId)
+            emoticonPackageMapper.saveLike(userId,emoId)
             ResultCommon.generateSuccess(msg = "点赞成功")
         } catch (e:Exception)
         {

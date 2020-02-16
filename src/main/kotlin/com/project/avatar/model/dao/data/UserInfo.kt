@@ -10,6 +10,8 @@ class UserInfo {
     var uPwd: String? = ""
     var uPhone:String? = ""
     var uEmail: String? = ""
+    var uGender:Int? = 0
+    var uAge:Int? = 0
     var authWxData:AuthWxData? = null
-    var authQQList:MutableList<AuthQQData>? = ArrayList()
+    var authQQList:MutableList<AuthQQData>? = null
 }

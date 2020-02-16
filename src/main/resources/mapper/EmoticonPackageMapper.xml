@@ -51,7 +51,7 @@
         values (#{filePath},#{addTime},#{fileName},#{fileSize},#{label},#{describeX},#{userId})
     </insert>
 
-    <insert id="clickLike" >
+    <insert id="saveLike" >
         insert into t_like_emoticon_user_info (user_id,emo_id) values (#{userId},#{emoId})
     </insert>
 </mapper>

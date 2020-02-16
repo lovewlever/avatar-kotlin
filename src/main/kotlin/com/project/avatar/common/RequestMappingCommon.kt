@@ -7,6 +7,7 @@ object RequestMappingCommon {
     const val LOGIN = "/login"//登录
     const val REGISTERED = "/registered"//注册
     const val GET_USER_INFO = "/getUserInfo"//获取用户信息
+    const val GET_VERIFY_CODE = "/getVerifyCode"//获取验证码
 
     const val AUTH_QQ = "/authQQ"//qq认证
     const val FIND_EMOTICON_PACKAGE = "/api/find_emoticon_package"//查询表情包
