@@ -6,6 +6,7 @@ import com.project.avatar.common.ResultCommon
 import com.project.avatar.model.dao.data.UserInfo
 import com.project.avatar.model.dao.mapper.UserMapper
 import com.project.avatar.model.services.UserService
+import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Service
 import javax.annotation.Resource
 
@@ -15,6 +16,7 @@ import javax.annotation.Resource
 @Service
 class UserServiceImpl:UserService {
 
+    private val log = LogManager.getLogger(UserServiceImpl::class.simpleName)
 
     @Resource
     lateinit var userMapper: UserMapper
@@ -39,10 +41,13 @@ class UserServiceImpl:UserService {
     override fun registeredUser(userInfo: UserInfo):Result<String>
     {
         return try {
+            log.debug("注册流程->开始保存用户")
             userMapper.registeredUser(userInfo)
+            log.debug("注册流程->保存用户成功")
             ResultCommon.generateSuccess(msg = "注册成功！")
         } catch (e:Exception)
         {
+            log.debug("注册流程->进入Catch，错误信息：${e.message}")
             ResultCommon.generateError(msg = e.message)
         }
 

@@ -6,6 +6,7 @@ import com.project.avatar.model.dao.data.UserInfo
 import com.project.avatar.model.services.UserDevicesService
 import com.project.avatar.model.services.UserService
 import nl.bitwalker.useragentutils.UserAgent
+import org.apache.logging.log4j.LogManager
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 class UserController {
 
+    private val log = LogManager.getLogger(UserController::class.simpleName)
+
     @Resource
     lateinit var userService: UserService
 
@@ -30,17 +33,19 @@ class UserController {
     /**
      * 获取验证码
      */
-    @RequestMapping(value = [RequestMappingCommon.GET_VERIFY_CODE],produces = ["image/jpg"])
-    fun getVerifyCode(request: HttpServletRequest):ByteArray {
+    @RequestMapping(value = [RequestMappingCommon.GET_VERIFY_CODE], produces = ["image/jpg"])
+    fun getVerifyCode(request: HttpServletRequest): ByteArray {
+        log.debug("进入获取验证码流程")
 
         val verifyCode = VerifyCode()
 
         val outputStream = ByteArrayOutputStream()
 
-        ImageIO.write(verifyCode.image,"jpg",outputStream)
+        ImageIO.write(verifyCode.image, "jpg", outputStream)
 
         codeResult = verifyCode.value
 
+        log.debug("进入获取验证码流程-以流的方式返回生成验证码图片")
         return outputStream.toByteArray()
     }
 
@@ -50,9 +55,10 @@ class UserController {
      */
     @RequestMapping(RequestMappingCommon.LOGIN)
     fun login(@RequestParam(defaultValue = "") account: String,
-              request: HttpServletRequest, pwd: String,verifyCode:Int): Result<UserInfo> {
-        if (verifyCode != codeResult)
-        {
+              request: HttpServletRequest, pwd: String, verifyCode: Int): Result<UserInfo> {
+        log.debug("进入登录流程-传入参数：$account-$pwd-$verifyCode")
+        if (verifyCode != codeResult) {
+            log.debug("登录流程-判断验证码：验证码错误（$verifyCode != ${codeResult}）")
             return ResultCommon.generateError(msg = "验证码错误！")
         }
 
@@ -66,6 +72,7 @@ class UserController {
             else -> userName = account
         }
 
+        log.debug("登录流程-进入Service层判断密码与用户并返回结果给前端")
         return userService.login(email, phone, userName, pwd, userAgent)
     }
 
@@ -74,10 +81,12 @@ class UserController {
      * 注册
      */
     @RequestMapping(RequestMappingCommon.REGISTERED)
-    fun registered( account: String, pwd: String, verifyCode:Int, request: HttpServletRequest): Result<String> {
+    fun registered(account: String, pwd: String, verifyCode: Int, request: HttpServletRequest): Result<String> {
+        log.debug("进入注册流程-传入参数：$account-$pwd-$verifyCode")
 
-        if (verifyCode != codeResult)
-        {
+        //判断验证码
+        if (verifyCode != codeResult) {
+            log.debug("注册流程-判断验证码：验证码错误（$verifyCode != ${codeResult}）")
             return ResultCommon.generateError(msg = "验证码错误！")
         }
 
@@ -93,12 +102,14 @@ class UserController {
         }
 
         val registeredUser = userService.registeredUser(userInfo)
-        if (registeredUser.code != 1)
-        {
+        if (registeredUser.code != 1) {
+            log.debug("注册流程-保存用户信息：保存用户信息失败（${registeredUser.msg}）")
             return registeredUser
         }
 
+        log.debug("注册流程-开始查询保存的用户id")
         userService.findUserInfoByOther(userInfo.uEmail!!, userInfo.uPhone!!, userInfo.uName!!)?.let { uInfo ->
+            log.debug("注册流程-查询到保存的用户并处理用户设备信息，注册时间等")
             val regTime = System.currentTimeMillis()
             val header = request.getHeader("User-Agent")
             val agentString = UserAgent.parseUserAgentString(header)
@@ -114,9 +125,11 @@ class UserController {
                 userId = uInfo.id
             }
 
+            log.debug("注册流程-保存注册用户的设备信息，注册时间等，并返回信息给前端")
             return userDevicesService.saveDevices(userDevicesData)
 
-        }?:let {
+        } ?: let {
+            log.debug("注册流程-查询保存的用户信息错误！")
             return ResultCommon.generateSuccess(msg = "注册成功，err！")
         }
     }

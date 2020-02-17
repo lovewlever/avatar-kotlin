@@ -33,7 +33,7 @@
     </select>
 
     <select id="findTotalCount" resultType="INTEGER" >
-        select count(0) from t_emoticon_package
+        select count(1) from t_emoticon_package
     </select>
 
 
