@@ -10,20 +10,6 @@
         <result column="token" property="token"/>
         <result column="u_gender" property="uGender"/>
         <result column="u_age" property="uAge"/>
-
-        <association property="authWxData" javaType="com.project.avatar.model.dao.data.AuthWxData" column="user_id">
-            <id column="id" property="id"/>
-            <result column="wx_id" property="wxId"/>
-            <result column="wx_name" property="wxName"/>
-            <result column="user_id" property="userId"/>
-        </association>
-
-        <collection property="authQQList" ofType="com.project.avatar.model.dao.data.AuthQQData" column="user_id">
-            <id column="auth_qq_id" property="authQQId"/>
-            <result column="qq_id" property="qqId"/>
-            <result column="qq_name" property="qqName"/>
-            <result column="user_id" property="userId"/>
-        </collection>
     </resultMap>
 
     <select id="getUserInfoById" resultMap="getUser">
