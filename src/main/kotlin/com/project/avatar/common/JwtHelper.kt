@@ -132,17 +132,17 @@ object JwtHelper {
             val decryptUserId = AESSecretUtil.decryptToStr(claims["userId"] as String, DATAKEY)
             retMap = HashMap()
             //加密后的客户编号
-            retMap["userId"] = decryptUserId
+            retMap["userId"] = decryptUserId ?: ""
             //客户名称
             retMap["userName"] = claims["userName"].toString()
             //客户端浏览器信息
             retMap["userAgent"] = claims["userAgent"].toString()
             //刷新JWT
-            retMap["freshToken"] = generateJWT(decryptUserId, claims["userName"].toString(), claims["userAgent"].toString(), claims["domainName"].toString())
+            retMap["freshToken"] = generateJWT(decryptUserId ?: "", claims["userName"].toString(), claims["userAgent"].toString(), claims["domainName"].toString())
         } else {
             //logger.warn("[JWTHelper]-JWT解析出claims为空");
         }
-        return if (retMap != null) Gson().toJson(retMap) else null
+        return retMap?.let { Gson().toJson(retMap) } ?: null
     }
 
     @JvmStatic
