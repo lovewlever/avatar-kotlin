@@ -145,7 +145,7 @@ object JwtHelper {
         return retMap?.let { Gson().toJson(retMap) } ?: null
     }
 
-    @JvmStatic
+    /*@JvmStatic
     fun main(args: Array<String>) {
         val jsonWebKey = generateJWT("123", "Judy",
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
@@ -153,7 +153,7 @@ object JwtHelper {
         val claims = parseJWT(jsonWebKey)
         println(claims)
         println(validateLogin(jsonWebKey))
-    }
+    }*/
 
 
 }
